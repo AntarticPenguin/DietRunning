@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     
 	void Start ()
     {
-        ChangeState(eState.IDLE);
+        
 	}
 	
 	void Update ()
