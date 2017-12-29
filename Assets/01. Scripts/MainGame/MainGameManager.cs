@@ -21,7 +21,7 @@ public class MainGameManager : MonoBehaviour
     //Unity Functions
 	void Start ()
     {
-		
+        StartGame();
 	}
 	
 	void Update ()
@@ -29,11 +29,20 @@ public class MainGameManager : MonoBehaviour
 		
 	}
 
+    // GameState
+    
+    void StartGame()
+    {
+        PlayerCharacterScript.ChangeState(Player.eState.RUN);
+        BlockCreatorScript.StartCreate();
+    }
+
     //GameObjects
 
-    public PlayerCharacter PlayerCharacterScript;
+    public Player PlayerCharacterScript;
+    public BlockCreator BlockCreatorScript;
 
-    public PlayerCharacter GetPlayer()
+    public Player GetPlayer()
     {
         return PlayerCharacterScript;
     }

@@ -8,51 +8,79 @@ public class PlayerCharacter : MonoBehaviour
 
 	void Start ()
     {
-        ChangeState(eState.RUN);    
+        
 	}
 	
 	void Update ()
     {
-		
+        //Check on Ground
+        LayerMask groundMask = 1 << LayerMask.NameToLayer("Ground");
+        RaycastHit2D hitFromGround = Physics2D.Raycast(transform.position, Vector3.down, 2.0f, groundMask);
+        if(null != hitFromGround.transform)
+        {
+            if(false == _isGround)
+            {
+                _isGround = true;
+                GetAnimator().SetBool("isGround", _isGround);
+            }
+        }
+        else
+        {
+            if(true == _isGround)
+            {
+                _isGround = false;
+                GetAnimator().SetBool("isGround", _isGround);
+            }
+        }
 	}
 
     //Character's State
 
-    public enum eState
+    public void IdleState()
     {
-        IDLE,
-        RUN,
-    };
+        GetAnimator().SetFloat("Horizontal", 0.0f);
+    }
 
-    void ChangeState(eState state)
+    public void RunState()
     {
-        switch(state)
-        {
-            case eState.IDLE:
-                _velocity.x = 0.0f;
-                _velocity.y = 0.0f;
-                GetAnimator().SetBool("isGround", true);
-                break;
-            case eState.RUN:
-                _velocity.x = 10.0f;
-                _velocity.y = 0.0f;
-                GetAnimator().SetBool("isGround", true);
-                GetAnimator().SetFloat("Horizontal", _velocity.x);
-                break;
-        }
+        GetAnimator().SetFloat("Horizontal", 1.0f);
     }
 
     //Move
 
-    Vector2 _velocity = Vector2.zero;
+    bool _isGround = false;
+    bool _canDoubleJump = false;
 
-    public Vector2 GetVelocity()
+    public void Jump()
     {
-        return _velocity;
+        if(true == _isGround)
+        {
+            JumpAction();
+            _canDoubleJump = true;
+        }
+        else if(true == _canDoubleJump)
+        {
+            JumpAction();
+            _canDoubleJump = false;
+        }
+    }
+
+    void JumpAction()
+    {
+        GetAnimator().SetTrigger("Jump");
+
+        /*
+        float jumpPower = 500.0f;
+        gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.up * jumpPower);    //effected by Gravity
+        */
+        float jumpSpeed = 10.0f;
+        Vector2 velocity = gameObject.GetComponent<Rigidbody2D>().velocity;
+        velocity.y = jumpSpeed;
+        gameObject.GetComponent<Rigidbody2D>().velocity = velocity;
     }
 
     //Animator
-    
+
     Animator GetAnimator()
     {
         return gameObject.GetComponent<Animator>();
