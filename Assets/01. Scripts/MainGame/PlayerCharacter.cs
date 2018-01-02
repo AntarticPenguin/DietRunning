@@ -34,6 +34,24 @@ public class PlayerCharacter : MonoBehaviour
         }
 	}
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+       if("Block" == collision.tag)
+        {
+            _player.ResetSpeed();
+        }
+    }
+
+
+    //Init
+
+    Player _player;
+
+    public void Init(Player player)
+    {
+        _player = player;
+    }
+
     //Character's State
 
     public void IdleState()
@@ -69,10 +87,6 @@ public class PlayerCharacter : MonoBehaviour
     {
         GetAnimator().SetTrigger("Jump");
 
-        /*
-        float jumpPower = 500.0f;
-        gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.up * jumpPower);    //effected by Gravity
-        */
         float jumpSpeed = 10.0f;
         Vector2 velocity = gameObject.GetComponent<Rigidbody2D>().velocity;
         velocity.y = jumpSpeed;

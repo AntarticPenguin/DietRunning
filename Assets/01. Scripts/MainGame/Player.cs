@@ -6,11 +6,13 @@ public class Player : MonoBehaviour
 {
     public PlayerCharacter PlayerView;
 
+
     //Unity Functions
     
 	void Start ()
     {
-        ChangeState(eState.IDLE);
+        PlayerView.Init(this);
+        ChangeState(eState.RUN);
 	}
 	
 	void Update ()
@@ -19,7 +21,21 @@ public class Player : MonoBehaviour
         {
             PlayerView.Jump();
         }
+
+        //Acceleration
+        if(eState.RUN == _state)
+        {
+            if(_velocity.x < _maxSpeed)
+            {
+                _velocity.x += _addSpeed;
+            }
+            else
+            {
+                _velocity.x = _maxSpeed;
+            }
+        }
     }
+
 
     //Character's State
 
@@ -29,8 +45,12 @@ public class Player : MonoBehaviour
         RUN,
     };
 
+    eState _state = eState.IDLE;
+
     public void ChangeState(eState state)
     {
+        _state = state;
+
         switch (state)
         {
             case eState.IDLE:
@@ -39,19 +59,27 @@ public class Player : MonoBehaviour
                 PlayerView.IdleState();
                 break;
             case eState.RUN:
-                _velocity.x = 10.0f;
+                _velocity.x = 0.0f;
                 _velocity.y = 0.0f;
                 PlayerView.RunState();
                 break;
         }
     }
 
+
     //Move
 
     Vector2 _velocity = Vector2.zero;
+    float _maxSpeed = 15.0f;
+    float _addSpeed = 0.05f;
 
     public Vector2 GetVelocity()
     {
         return _velocity;
+    }
+
+    public void ResetSpeed()
+    {
+        _velocity.x = 0.0f;
     }
 }

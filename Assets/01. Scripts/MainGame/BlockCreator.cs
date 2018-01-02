@@ -11,16 +11,16 @@ public class BlockCreator : MonoBehaviour
 	
 	void Update ()
     {
-        if (false == _isCreate)
+        if ( false == _isCreate )
             return;
 
-		if(_createInterval <= _createDuration)
+        float distance = transform.position.x - _prevBlockObject.transform.position.x;
+        if ( 10 <= distance )
         {
-            _createDuration = 0.0f;
-            CreateBlock();
+            _prevBlockObject = CreateBlock();
         }
-        _createDuration += Time.deltaTime;
 	}
+
 
     //State
 
@@ -29,19 +29,30 @@ public class BlockCreator : MonoBehaviour
     public void StartCreate()
     {
         _isCreate = true;
+
+        _prevBlockObject = CreateBlock();
     }
+
 
     //Blocks
 
     public GameObject BlockPrefabs;
+    GameObject _prevBlockObject;
 
-    float _createInterval = 1.5f;
-    float _createDuration = 0.0f;
-
-    void CreateBlock()
+    GameObject CreateBlock()
     {
         GameObject blockObject = GameObject.Instantiate(BlockPrefabs);
         blockObject.transform.position = transform.position;
-        GameObject.Destroy(blockObject, 6.0f);
+
+        int randValue = Random.Range(0, 1000);
+        if( randValue < 300 )
+        {
+            blockObject.transform.position = new Vector2(blockObject.transform.position.x, 3.0f);
+        }
+
+        //GameObject.Destroy(blockObject, 6.0f);
+
+
+        return blockObject;
     }
 }
