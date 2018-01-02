@@ -11,19 +11,15 @@ public class Player : MonoBehaviour
     
 	void Start ()
     {
-<<<<<<< HEAD
         PlayerView.Init(this);
         ChangeState(eState.RUN);
-=======
-        
->>>>>>> 3e8f78579e2e2f92adcad758d33b1affa89aaa13
 	}
 	
 	void Update ()
     {
         if (Input.GetButtonDown("Jump"))
         {
-            PlayerView.Jump();
+            PlayerView.Jump(_jumpSpeed);
         }
 
         //Acceleration
@@ -74,8 +70,11 @@ public class Player : MonoBehaviour
     //Move
 
     Vector2 _velocity = Vector2.zero;
-    float _maxSpeed = 15.0f;
-    float _addSpeed = 0.05f;
+
+    //for test
+    public float _maxSpeed = 15.0f;
+    public float _addSpeed = 0.05f;
+    public float _jumpSpeed = 10.0f;
 
     public Vector2 GetVelocity()
     {

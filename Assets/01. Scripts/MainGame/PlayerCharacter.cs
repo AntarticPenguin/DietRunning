@@ -52,6 +52,7 @@ public class PlayerCharacter : MonoBehaviour
         _player = player;
     }
 
+
     //Character's State
 
     public void IdleState()
@@ -64,34 +65,36 @@ public class PlayerCharacter : MonoBehaviour
         GetAnimator().SetFloat("Horizontal", 1.0f);
     }
 
+
     //Move
 
     bool _isGround = false;
     bool _canDoubleJump = false;
 
-    public void Jump()
+    public void Jump(float jumpSpeed)
     {
         if(true == _isGround)
         {
-            JumpAction();
+            JumpAction(jumpSpeed);
             _canDoubleJump = true;
         }
         else if(true == _canDoubleJump)
         {
-            JumpAction();
+            JumpAction(jumpSpeed);
             _canDoubleJump = false;
         }
     }
 
-    void JumpAction()
+    void JumpAction(float jumpSpeed)
     {
         GetAnimator().SetTrigger("Jump");
 
-        float jumpSpeed = 10.0f;
+        //float jumpSpeed = 10.0f;
         Vector2 velocity = gameObject.GetComponent<Rigidbody2D>().velocity;
         velocity.y = jumpSpeed;
         gameObject.GetComponent<Rigidbody2D>().velocity = velocity;
     }
+
 
     //Animator
 

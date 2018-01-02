@@ -15,7 +15,7 @@ public class BlockCreator : MonoBehaviour
             return;
 
         float distance = transform.position.x - _prevBlockObject.transform.position.x;
-        if ( 10 <= distance )
+        if ( _intervalDistance <= distance )
         {
             _prevBlockObject = CreateBlock();
         }
@@ -39,15 +39,19 @@ public class BlockCreator : MonoBehaviour
     public GameObject BlockPrefabs;
     GameObject _prevBlockObject;
 
+    //for test
+    public float _intervalDistance = 10.0f;
+
+
     GameObject CreateBlock()
     {
         GameObject blockObject = GameObject.Instantiate(BlockPrefabs);
         blockObject.transform.position = transform.position;
 
         int randValue = Random.Range(0, 1000);
-        if( randValue < 300 )
+        if( randValue < 200 )
         {
-            blockObject.transform.position = new Vector2(blockObject.transform.position.x, 3.0f);
+            blockObject.transform.position = new Vector2(blockObject.transform.position.x, 1.8f);
         }
 
         //GameObject.Destroy(blockObject, 6.0f);

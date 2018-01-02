@@ -18,6 +18,7 @@ public class MainGameManager : MonoBehaviour
         }
     }
 
+    
     //Unity Functions
 	void Start ()
     {
@@ -29,6 +30,7 @@ public class MainGameManager : MonoBehaviour
 		
 	}
 
+
     // GameState
     
     void StartGame()
@@ -36,6 +38,7 @@ public class MainGameManager : MonoBehaviour
         PlayerCharacterScript.ChangeState(Player.eState.RUN);
         BlockCreatorScript.StartCreate();
     }
+
 
     //GameObjects
 
