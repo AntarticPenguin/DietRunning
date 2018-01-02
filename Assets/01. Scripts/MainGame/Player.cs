@@ -11,8 +11,12 @@ public class Player : MonoBehaviour
     
 	void Start ()
     {
+<<<<<<< HEAD
         PlayerView.Init(this);
         ChangeState(eState.RUN);
+=======
+        
+>>>>>>> 3e8f78579e2e2f92adcad758d33b1affa89aaa13
 	}
 	
 	void Update ()
