@@ -37,6 +37,8 @@ public class BlockCreator : MonoBehaviour
     //Blocks
 
     public GameObject BlockPrefabs;
+    public GameObject Coin01_Prefabs;
+    public GameObject Coin02_Prefabs;
     GameObject _prevBlockObject;
 
     //for test
@@ -48,14 +50,35 @@ public class BlockCreator : MonoBehaviour
         GameObject blockObject = GameObject.Instantiate(BlockPrefabs);
         blockObject.transform.position = transform.position;
 
+        /*
+        GameObject coin01_Object = GameObject.Instantiate(CoinPrefabs);
+        coin01_Object.transform.position = new Vector2(transform.position.x, 2.5f);
+
+        GameObject coin02_Object = GameObject.Instantiate(CoinPrefabs);
+        coin02_Object.transform.position = new Vector2(transform.position.x, 5.0f);
+        */
+        int selectCoin = Random.Range(0, 1000);
+        GameObject coin01_Object;
+        GameObject coin02_Object;
+        if (selectCoin < 500)
+        {
+            coin01_Object = GameObject.Instantiate(Coin01_Prefabs);
+            coin02_Object = GameObject.Instantiate(Coin02_Prefabs);
+        }
+        else
+        {
+            coin01_Object = GameObject.Instantiate(Coin02_Prefabs);
+            coin02_Object = GameObject.Instantiate(Coin01_Prefabs);
+        }
+
+        coin01_Object.transform.position = new Vector2(transform.position.x, 2.5f);
         int randValue = Random.Range(0, 1000);
         if( randValue < 200 )
         {
-            blockObject.transform.position = new Vector2(blockObject.transform.position.x, 1.8f);
+            blockObject.transform.position = new Vector2(blockObject.transform.position.x, 2.5f);
+            coin01_Object.transform.position = transform.position;
         }
-
-        //GameObject.Destroy(blockObject, 6.0f);
-
+        coin02_Object.transform.position = new Vector2(transform.position.x, 5.0f);
 
         return blockObject;
     }
