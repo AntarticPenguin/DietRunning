@@ -76,7 +76,11 @@ public class PlayerCharacter : MonoBehaviour
         if(true == _isGround)
         {
             JumpAction(jumpSpeed);
-            _canDoubleJump = true;
+
+            if(MainGameManager.Instance.GetPlayer().GetCurrentWeight() < 80.0f)
+                _canDoubleJump = true;
+            else
+                _canDoubleJump = false;
         }
         else if(true == _canDoubleJump)
         {
@@ -89,7 +93,6 @@ public class PlayerCharacter : MonoBehaviour
     {
         GetAnimator().SetTrigger("Jump");
 
-        //float jumpSpeed = 10.0f;
         Vector2 velocity = gameObject.GetComponent<Rigidbody2D>().velocity;
         velocity.y = jumpSpeed;
         gameObject.GetComponent<Rigidbody2D>().velocity = velocity;

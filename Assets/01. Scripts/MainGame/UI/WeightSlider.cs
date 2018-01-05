@@ -19,10 +19,9 @@ public class WeightSlider : MonoBehaviour
         float minWeight = MainGameManager.Instance.GetPlayer().GetMinWeight();
         float currentWeight = MainGameManager.Instance.GetPlayer().GetCurrentWeight();
 
-        //float maxLength = maxWeight - minWeight;
-        //float currentLength = currentWeight - minWeight;
-        //float rate = currentLength / maxLength;
-        float rate = currentWeight / maxWeight;
+        float maxLength = maxWeight - minWeight;
+        float currentLength = currentWeight - minWeight;
+        float rate = currentLength / maxLength;
 
         gameObject.GetComponent<Slider>().value = rate;
 	}
