@@ -7,7 +7,6 @@ public class HUD : MonoBehaviour
 {
     public Text WeightText;
     public Text MaxSpeedText;
-    public Text CurrentSpeedText;
     public Text JumpInfoText;
     public Text RemainDistanceText;
 
@@ -24,7 +23,6 @@ public class HUD : MonoBehaviour
         WeightText.text = "체중: " + MainGameManager.Instance.GetPlayer().GetCurrentWeight().ToString("N2")
                             + " / " + MainGameManager.Instance.GetPlayer().GetGoalWeight();
         MaxSpeedText.text = "최대속도: " + MainGameManager.Instance.GetPlayer().GetMaxSpeed();
-        CurrentSpeedText.text = "속도: " + MainGameManager.Instance.GetPlayer().GetSpeed();
 
 
         if (MainGameManager.Instance.GetPlayer().CanDoubleJump())

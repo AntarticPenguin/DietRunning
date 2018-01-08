@@ -52,7 +52,8 @@ public class Player : MonoBehaviour
 
     void UpdateWeight()
     {
-        _currentWeight -= _decreaseWeight;
+        float decreaseWeight = _coefficientWeight * Mathf.Log10(_velocity.x);
+        _currentWeight -= decreaseWeight;
         if (_currentWeight < _minWeight)
             _currentWeight = _minWeight;
 
@@ -131,13 +132,13 @@ public class Player : MonoBehaviour
                 PlayerView.RunState();
                 break;
             case eState.DEATH:
-                _velocity.x = 0;
-                _velocity.y = 0;
+                _velocity.x = 0.0f;
+                _velocity.y = 0.0f;
                 PlayerView.IdleState();
                 break;
             case eState.COMPLETE:
-                _velocity.x = 0;
-                _velocity.y = 0;
+                _velocity.x = 0.0f;
+                _velocity.y = 0.0f;
                 PlayerView.IdleState();
                 break;
         }
@@ -161,24 +162,19 @@ public class Player : MonoBehaviour
     {
         float deltaWeight = _goalWeight - _currentWeight;
         float deltaWeightOffset = Mathf.Abs(deltaWeight);
-        if (deltaWeight < 3.0f)
+        if (deltaWeightOffset < 3.0f)
             return true;
         return false;
     }
 
-    //Character's Info
+
+    //Hp
 
     float _maxHP = 100.0f;
-    float _decreaseHP = 0.1f;
     float _currentHP = 0.0f;
 
-    float _maxWeight = 120.0f;
-    float _minWeight = 40.0f;
-    float _startWeight = 100.0f;
-    float _decreaseWeight = 0.05f;
-    float _currentWeight = 0.0f;
-
-    float _goalWeight = 70.0f;
+    //for test
+    public float _decreaseHP = 0.1f;
 
     public float GetMaxHP()
     {
@@ -196,6 +192,18 @@ public class Player : MonoBehaviour
         if (_maxHP < _currentHP)
             _currentHP = _maxHP;
     }
+
+
+    //Weight
+
+    float _maxWeight = 120.0f;
+    float _minWeight = 40.0f;
+    float _startWeight = 100.0f;
+    float _currentWeight = 0.0f;
+    float _goalWeight = 70.0f;
+
+    //for test
+    public float _coefficientWeight = 0.05f;
 
     public float GetMaxWeight()
     {
@@ -226,22 +234,13 @@ public class Player : MonoBehaviour
             _currentWeight = _maxWeight;
     }
 
-    public bool CanDoubleJump()
-    {
-        if (MainGameManager.Instance.GetPlayer().GetCurrentWeight() < 80.0f)
-            return true;
-        else
-            return false;
-    }
 
-
-    //Move
+    //Move & Speed
 
     Vector2 _velocity = Vector2.zero;
 
     float _maxSpeed = 12.0f;
     float _addSpeed = 0.05f;
-    float _jumpSpeed = 18.0f;
 
     float _maxDistance = 200.0f;
     float _distance = 0.0f;
@@ -261,11 +260,6 @@ public class Player : MonoBehaviour
         return _maxSpeed;
     }
 
-    public float GetSpeed()
-    {
-        return _velocity.x;
-    }
-
     public float GetMaxDistance()
     {
         return _maxDistance;
@@ -274,5 +268,18 @@ public class Player : MonoBehaviour
     public float GetDistance()
     {
         return _distance;
+    }
+
+
+    //Jump
+
+    float _jumpSpeed = 19.0f;
+
+    public bool CanDoubleJump()
+    {
+        if (MainGameManager.Instance.GetPlayer().GetCurrentWeight() < 80.0f)
+            return true;
+        else
+            return false;
     }
 }
