@@ -160,9 +160,8 @@ public class Player : MonoBehaviour
 
     public bool IsSuccess()
     {
-        float deltaWeight = _goalWeight - _currentWeight;
-        float deltaWeightOffset = Mathf.Abs(deltaWeight);
-        if (deltaWeightOffset < 3.0f)
+        float weightPercent = (_currentWeight / _goalWeight) * 100;
+        if (90.0f < weightPercent)
             return true;
         return false;
     }
@@ -255,11 +254,6 @@ public class Player : MonoBehaviour
         _velocity.x = 0.0f;
     }
 
-    public float GetMaxSpeed()
-    {
-        return _maxSpeed;
-    }
-
     public float GetMaxDistance()
     {
         return _maxDistance;
@@ -268,6 +262,11 @@ public class Player : MonoBehaviour
     public float GetDistance()
     {
         return _distance;
+    }
+
+    public float GetCurrentSpeed()
+    {
+        return _velocity.x;
     }
 
 

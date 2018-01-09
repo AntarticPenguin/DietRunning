@@ -6,9 +6,10 @@ using UnityEngine.UI;
 public class HUD : MonoBehaviour
 {
     public Text WeightText;
-    public Text MaxSpeedText;
     public Text JumpInfoText;
     public Text RemainDistanceText;
+    public Text currentSpeedText;
+    public Text ScoreText;
 
 
     //Unity Functions
@@ -22,16 +23,14 @@ public class HUD : MonoBehaviour
     {
         WeightText.text = "체중: " + MainGameManager.Instance.GetPlayer().GetCurrentWeight().ToString("N2")
                             + " / " + MainGameManager.Instance.GetPlayer().GetGoalWeight();
-        MaxSpeedText.text = "최대속도: " + MainGameManager.Instance.GetPlayer().GetMaxSpeed();
-
 
         if (MainGameManager.Instance.GetPlayer().CanDoubleJump())
         {
-            JumpInfoText.text = "더블점프: 가능";
+            JumpInfoText.text = "DOUBLE JUMP";
         }
         else
         {
-            JumpInfoText.text = "더블점프: 불가";
+            JumpInfoText.text = "SINGLE JUMP";
         }
 
         float maxDistance = MainGameManager.Instance.GetPlayer().GetMaxDistance();
@@ -39,5 +38,7 @@ public class HUD : MonoBehaviour
         int remainDistance = (int)(maxDistance - distance);
 
         RemainDistanceText.text = "남은거리: " + remainDistance;
+        currentSpeedText.text = "현재속도: " + MainGameManager.Instance.GetPlayer().GetCurrentSpeed().ToString("N2");
+        ScoreText.text = ScoreManager.Instance.GetScore().ToString("D8");
     }
 }
